@@ -3,6 +3,7 @@
 
 #include <deque>
 #include <mutex>
+#include <memory>
 #include <algorithm>
 
 enum class PopCriteria
@@ -14,14 +15,14 @@ enum class PopCriteria
 template <typename T>
 class Queue
 {
+    using ContainerType = std::deque<T>;
+    using iterator = typename ContainerType::iterator;
+
 public:
     Queue() = default;
     ~Queue() = default;
     Queue& operator=(const Queue&) = delete;
     Queue(const Queue& other) = delete;
-
-    using ContainerType = std::deque<T>;
-    using iterator = typename ContainerType::iterator;
 
     bool empty() const
     {
@@ -76,5 +77,12 @@ private:
     std::deque<T> queue_;
     mutable std::mutex m_;
 };
+
+// Factory to create a shared_ptr of the Queue
+template<typename T>
+std::shared_ptr<Queue<T>> makeQueue (void)
+{
+    return std::make_shared<Queue<T>>();
+}
 
 #endif

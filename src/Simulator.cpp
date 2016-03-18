@@ -11,24 +11,24 @@ int main()
     p3.setPriority(10);
     p4.setPriority(20);
 
-    Queue<Process> queue;
+    auto queue = makeQueue<Process>();
 
-    queue.push(p1);
-    queue.push(p2);
-    queue.push(p3);
-    queue.push(p4);
+    queue->push(p1);
+    queue->push(p2);
+    queue->push(p3);
+    queue->push(p4);
 
-    queue.debug();
+    queue->debug();
 
-    std::cout << "Size: " << queue.size() << std::endl;
-    auto ret = queue.pop(PopCriteria::PRIORITY);
-    auto ret2 = queue.pop(PopCriteria::ARRIVAL_TIME);
+    std::cout << "Size: " << queue->size() << std::endl;
+    auto ret = queue->pop(PopCriteria::PRIORITY);
+    auto ret2 = queue->pop(PopCriteria::ARRIVAL_TIME);
 
     std::cout << (*ret).getPriority() << " " << (*ret2).getTimeStamp() << std::endl;
 
-    std::cout << "Size: " << queue.size() << std::endl;
+    std::cout << "Size: " << queue->size() << std::endl;
 
-    queue.debug();
+    queue->debug();
 
     return 0;
 }
