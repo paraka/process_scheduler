@@ -1,6 +1,14 @@
 #include <iostream>
 #include "Queue.h"
 #include "Process.h"
+#include "Utils.h"
+
+namespace
+{
+    static const uint64_t EXECUTION_TIME_SECONDS = 10;
+    static const uint32_t MILLISECONS_IN_A_SECOND = 1000;
+    static const uint32_t MICROSECONS_IN_A_SECOND = 1000000;
+}
 
 int main()
 {
@@ -13,22 +21,35 @@ int main()
 
     auto queue = makeQueue<Process>();
 
-    queue->push(p1);
-    queue->push(p2);
-    queue->push(p3);
-    queue->push(p4);
+    uint64_t seconds = Utils::getTimeStamp();
+    uint64_t stopTS = Utils::getTimeStamp() + (EXECUTION_TIME_SECONDS * MILLISECONS_IN_A_SECOND);
 
-    queue->debug();
+    auto t1 = Utils::Time();
 
-    std::cout << "Size: " << queue->size() << std::endl;
-    auto ret = queue->pop(PopCriteria::PRIORITY);
-    auto ret2 = queue->pop(PopCriteria::ARRIVAL_TIME);
+    while (seconds <= stopTS)
+    {
+        queue->push(p1);
+        queue->push(p2);
+        queue->push(p3);
+        queue->push(p4);
 
-    std::cout << (*ret).getPriority() << " " << (*ret2).getTimeStamp() << std::endl;
+        queue->debug();
 
-    std::cout << "Size: " << queue->size() << std::endl;
+        std::cout << "Size: " << queue->size() << std::endl;
+        auto ret = queue->pop(PopCriteria::PRIORITY);
+        auto ret2 = queue->pop(PopCriteria::ARRIVAL_TIME);
 
-    queue->debug();
+        std::cout << (*ret).getPriority() << " " << (*ret2).getTimeStamp() << std::endl;
+
+        std::cout << "Size: " << queue->size() << std::endl;
+
+        queue->debug();
+        seconds = Utils::getTimeStamp();
+    }
+
+    auto t2 = Utils::Time();
+
+    std::cout << "Executing stuff for " << Utils::Diff(t1, t2) / MICROSECONS_IN_A_SECOND << " seconds" << std::endl;
 
     return 0;
 }
