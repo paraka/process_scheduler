@@ -18,6 +18,8 @@ endif ()
 
 set(SCHEDULER_SRCS 
      ${CMAKE_CURRENT_SOURCE_DIR}/src/Process.cpp 
+     ${CMAKE_CURRENT_SOURCE_DIR}/src/Algorithms.cpp
+     ${CMAKE_CURRENT_SOURCE_DIR}/src/ProcessGenerator.cpp
      ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulator.cpp)
 
 add_executable(ProcessSchedulerSimulator ${SCHEDULER_SRCS})
