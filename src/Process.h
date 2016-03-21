@@ -11,6 +11,8 @@ public:
     double getCPUPercent() const { return cpu_percent_; }
     int32_t getPriority() const { return priority_; }
     void setPriority(int32_t priority) { priority_ = priority; }
+    // For testing purpose
+    void setTimeStamp(int64_t ts) { timestamp_ = ts; }
     void debugProcess();
 
 private:

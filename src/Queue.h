@@ -36,6 +36,12 @@ public:
         return queue_.size();
     }
 
+    void clear()
+    {
+        std::lock_guard<std::mutex> lock(m_);
+        queue_.clear();
+    }
+
     void push(T item)
     {
         std::lock_guard<std::mutex> lock(m_);
