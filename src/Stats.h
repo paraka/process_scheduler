@@ -7,7 +7,7 @@ struct Stats
     double total_cpu;
     uint32_t total_work_units;
 
-    Stats() : num_process(0), total_cpu(0.0) {}
+    Stats() : num_process(0), total_cpu(0.0), total_work_units(0) {}
 };
 
 #endif // STATS_H_
