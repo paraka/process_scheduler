@@ -34,7 +34,7 @@ auto bindSimulator(EAlgorithms algorithm)
             }
         case EAlgorithms::SJK:
             {
-                AlgorithmSimulator sjk(std::bind(&Algorithms::PriorityQueue, std::placeholders::_1, std::placeholders::_2));
+                AlgorithmSimulator sjk(std::bind(&Algorithms::SJK, std::placeholders::_1, std::placeholders::_2));
                 return sjk;
             }
         default:
