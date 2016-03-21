@@ -27,6 +27,7 @@ void ProcessGenerator::run()
         Process p(pid, percent_cpu);
         uint32_t priority = static_cast<uint32_t>(Utils::getRandom<double>(1.0, 20.0));
         p.setPriority(priority);
+        uint32_t work_units = static_cast<uint32_t>(Utils::getRandom<double>(1.0, 10.0));
         queue_->push(p);
         ++pid;
     }

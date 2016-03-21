@@ -50,6 +50,8 @@ void ShowStats(const Stats &stats, const std::string &alg)
     std::cout << "Algorithm: " << alg << std::endl;
     std::cout << "Total Processes: " << stats.num_process << std::endl;
     std::cout << "Total CPU Time: " << stats.total_cpu << std::endl;
+    std::cout << "Total Work Units: " << stats.total_work_units << std::endl;
+    std::cout << "CPU Time per work unit: " << stats.total_cpu / stats.total_work_units << std::endl;
     std::cout << "CPU Time per process: " << stats.total_cpu / stats.num_process << std::endl;
     std::cout << "**************************************" << std::endl;
 }

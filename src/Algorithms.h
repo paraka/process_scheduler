@@ -2,6 +2,7 @@
 #define _ALGORITHMS_H_
 
 #include <memory>
+#include <functional>
 #include "Queue.h"
 #include "Process.h"
 
@@ -18,6 +19,10 @@ struct Stats;
 class Algorithms
 {
     using QueuePtr = std::shared_ptr<Queue<Process>>;
+    using ComparatorFunc = std::function<bool(const Process& a,  const Process& b)>;
+
+private:
+    static void Execute(QueuePtr queue, ComparatorFunc func, Stats& stats);
 
 public:
     static void FCFS(QueuePtr queue, Stats& stats);
