@@ -11,7 +11,7 @@ class Queue
 {
     using ContainerType = std::deque<T>;
     using iterator = typename ContainerType::iterator;
-    using ComparatorFunctor = std::function<bool(T& a, T& b)>;
+    using ComparatorFunctor = std::function<bool(const T& a, const T& b)>;
 
 public:
     Queue() = default;
