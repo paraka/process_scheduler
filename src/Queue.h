@@ -6,17 +6,12 @@
 #include <memory>
 #include <algorithm>
 
-enum class PopCriteria
-{
-    PRIORITY = 0,
-    ARRIVAL_TIME,
-};
-
 template <typename T>
 class Queue
 {
     using ContainerType = std::deque<T>;
     using iterator = typename ContainerType::iterator;
+    using ComparatorFunctor = std::function<bool(T& a, T& b)>;
 
 public:
     Queue() = default;
@@ -48,23 +43,12 @@ public:
         queue_.push_back(item);
     }
 
-    auto pop(PopCriteria c)
+    auto pop(ComparatorFunctor compf)
     {
         std::lock_guard<std::mutex> lock(m_);
         if (queue_.empty()) throw std::logic_error("Empty queue");
 
-        iterator ret;
-
-        if (c == PopCriteria::PRIORITY) 
-        {
-            auto comp1 = [](const T &a, const T &b ) { return a.getPriority() < b.getPriority(); }; 
-            ret = std::max_element(queue_.begin(), queue_.end(), comp1);
-        }
-        else
-        {
-            auto comp1 = [](const T &a, const T &b ) { return a.getTimeStamp() < b.getTimeStamp(); };
-            ret = std::min_element(queue_.begin(), queue_.end(), comp1);
-        }
+        iterator ret = std::min_element(queue_.begin(), queue_.end(), compf);
 
         queue_.erase(queue_.begin() + std::distance(queue_.begin(), ret));
 

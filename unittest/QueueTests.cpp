@@ -50,11 +50,13 @@ protected:
 
 TEST_F(QueueFixture, PopGetCorrectCriteriaElement)
 {
-    auto ret = queue_->pop(PopCriteria::PRIORITY);
+    auto comp = [](const Process &a, const Process &b ) { return a.getPriority() > b.getPriority(); };
+    auto ret = queue_->pop(comp);
     ASSERT_EQ((*ret).getPriority(), 20);
     ASSERT_EQ((*ret).getPid(), 7);
     ASSERT_EQ(queue_->size(), 3);
-    ret = queue_->pop(PopCriteria::ARRIVAL_TIME);
+    auto comp2 = [](const Process &a, const Process &b ) { return a.getTimeStamp() < b.getTimeStamp(); };
+    ret = queue_->pop(comp2);
     ASSERT_EQ((*ret).getTimeStamp(), 121);
     ASSERT_EQ((*ret).getPid(), 6);
     ASSERT_EQ(queue_->size(), 2);
@@ -63,5 +65,6 @@ TEST_F(QueueFixture, PopGetCorrectCriteriaElement)
 TEST_F(QueueFixture, EmptyQueueThrowsOnPop)
 {
     CleanQueue();
-    ASSERT_THROW(queue_->pop(PopCriteria::PRIORITY), std::logic_error);
+    auto comp = [](const Process &a, const Process &b ) { return a.getTimeStamp() < b.getTimeStamp(); };
+    ASSERT_THROW(queue_->pop(comp), std::logic_error);
 }

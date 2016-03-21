@@ -6,12 +6,13 @@ void Algorithms::FCFS(QueuePtr queue, Stats& stats)
 {
     std::cout << "FCFS" << std::endl;
     
+    auto compFCFS = [](const Process &a, const Process &b ) { return a.getTimeStamp() < b.getTimeStamp(); };
+
     while (!queue->empty())
     {
-        auto process = queue->pop(PopCriteria::ARRIVAL_TIME);
+        auto process = queue->pop(compFCFS);
         ++stats.num_process;
         stats.total_cpu +=  (*process).getCPUPercent();
-        //(*process).debugProcess();
     }
 }
 
