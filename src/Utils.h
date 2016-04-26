@@ -1,6 +1,7 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <type_traits>
 #include <random>
 #include <chrono>
 
@@ -13,6 +14,7 @@ public:
     template <typename T>
     static auto getRandom(T min, T max)
     {
+        static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
         std::random_device rd;
         std::mt19937 mt(rd());
         std::uniform_real_distribution<T> dist(min, max);
